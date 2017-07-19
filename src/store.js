@@ -10,7 +10,7 @@ export type AppState = {
     [listId: string]: List
   },
   navigationState: {
-    listId: void | string,
+    listId: void | string
   }
 };
 
@@ -21,7 +21,7 @@ const initialState: AppState = {
     }
   },
   navigationState: {
-    listId: "list1",
+    listId: "list1"
   }
 };
 
@@ -31,7 +31,7 @@ export const selectCurrentList = (state: AppState) => {
   }
   const currentListId = state.navigationState.listId;
   return state.lists[currentListId];
-}
+};
 
 // We re-export an application-specific ActionCreator class
 export class ActionCreator<A, B> extends ReduxUtils.ActionCreator<

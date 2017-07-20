@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components";
 import { Card, colors } from "./styles.js";
 import { connect } from "react-redux";
-import type { AppState } from "./store";
+import type { AppState, WithDispatch } from "./store";
 import { selectCurrentList } from "./store/current_list";
 import { TabContent } from "./TabContent";
 import * as Actions from "./actions";
@@ -46,20 +46,19 @@ const NewTab = styled.div`
 `;
 
 type Props = {
-  dispatch: Function,
   lists: { [string]: List },
   currentList: ?List,
   currentListId: ?string
 };
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: AppState): Props => ({
   lists: state.lists,
   currentList: selectCurrentList(state),
   currentListId: state.navigationState.listId
 });
 
 class AppInner extends React.Component {
-  props: Props;
+  props: WithDispatch<Props>;
 
   render() {
     if (Object.keys(this.props.lists).length > 0) {

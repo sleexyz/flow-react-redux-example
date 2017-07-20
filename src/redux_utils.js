@@ -22,7 +22,7 @@ export const makeReducer = <State>(initialState: State): Reducer<State> => (
   return state;
 };
 
-type Action<State, Env, A, B> = {
+export type Action<State, Env, A, B> = {
   type: string,
   sourceActionCreator: ActionCreator<State, Env, A, B>,
   parentAction?: *,

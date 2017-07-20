@@ -1,7 +1,7 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
-import type { Dispatch } from "redux";
+import type { WithDispatch } from "./store";
 import type { List } from "./types";
 import styled from "styled-components";
 import { deleteTodo, setTodoContent, addTodo } from "./store/current_list";
@@ -24,11 +24,10 @@ const AddTodo = styled.div`
 `;
 
 class TabContentInner extends React.Component {
-  props: {
+  props: WithDispatch<{
     list: List,
-    listId: string,
-    dispatch: Dispatch<*>
-  };
+    listId: string
+  }>;
   render() {
     const todos = Object.keys(this.props.list.todos).map(todoId => {
       const todo = this.props.list.todos[todoId];

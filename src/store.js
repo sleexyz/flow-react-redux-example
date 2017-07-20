@@ -1,6 +1,7 @@
 // @flow
 import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
+import type { Dispatch } from "redux";
 import type { List } from "./types";
 import * as ReduxUtils from "./redux_utils";
 import * as Services from "./services";
@@ -33,14 +34,16 @@ export class ActionCreator<A, B> extends ReduxUtils.ActionCreator<
   B
 > {}
 
-export const makeStore = () =>
+type Action = ReduxUtils.Action<AppState, Services.Env, any, any>;
+
+export type WithDispatch<A: {}> = A & { dispatch: Dispatch<Action> };
+
+export const makeStore = (env: Services.Env) =>
   createStore(
     ReduxUtils.makeReducer(initialState),
     applyMiddleware(
       // ReduxUtils
-      ReduxUtils.hijackDispatch({
-        env: Services.makeEnv()
-      }),
+      ReduxUtils.hijackDispatch({ env }),
       // Logger
       createLogger({
         level: {

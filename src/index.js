@@ -4,8 +4,10 @@ import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 import { App } from "./App";
 import { makeStore } from "./store";
+import { makeEnv } from "./services";
 
-const globalStore = makeStore();
+const globalEnv = makeEnv();
+const globalStore = makeStore(globalEnv);
 
 const renderApp = () => {
   const elem = (

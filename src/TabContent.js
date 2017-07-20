@@ -1,33 +1,52 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
+import type { Dispatch } from "redux";
 import type { List } from "./types";
 import styled from "styled-components";
+import { deleteTodo, setTodoContent, addTodo } from "./store/current_list";
+import { TodoRow } from "./TodoRow";
+
+const Body = styled.div`
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  & > * {
+    margin: 2px 0;
+  }
+`;
 
 const AddTodo = styled.div`
   &::before {
+    opacity: 0.5;
     content: "+ Add Todo";
   }
 `;
 
-type Props = {
-  list: List,
-  listId: string
-};
-
 class TabContentInner extends React.Component {
-  props: Props;
+  props: {
+    list: List,
+    listId: string,
+    dispatch: Dispatch<*>
+  };
   render() {
-    const todos = this.props.list.todos.map((todo, i) =>
-      <div key={i}>
-        {JSON.stringify(todo)}
-      </div>
-    );
+    const todos = Object.keys(this.props.list.todos).map(todoId => {
+      const todo = this.props.list.todos[todoId];
+      return (
+        <TodoRow
+          key={todoId}
+          onChange={(content: string) =>
+            void this.props.dispatch(setTodoContent({ todoId, content }))}
+          onDelete={() => void this.props.dispatch(deleteTodo(todoId))}
+          content={todo.content}
+        />
+      );
+    });
     return (
-      <div>
+      <Body>
         {todos}
-        <AddTodo />
-      </div>
+        <AddTodo onClick={() => this.props.dispatch(addTodo())} />
+      </Body>
     );
   }
 }

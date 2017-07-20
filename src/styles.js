@@ -11,6 +11,7 @@ export const Card = (h: number = 1) => {
 
 export const colors = {
   lightGrey: "#f5f6f7",
+  grey: "#aaaaaa",
   blue: "#0288d1",
   white: "#ffffff",
   black: "#000000"

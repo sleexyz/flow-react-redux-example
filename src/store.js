@@ -5,32 +5,24 @@ import type { List } from "./types";
 import * as ReduxUtils from "./redux_utils";
 import * as Services from "./services";
 
-export type AppState = {
+export type AppState = {|
   lists: {
     [listId: string]: List
   },
-  navigationState: {
+  navigationState: {|
     listId: void | string
-  }
-};
+  |}
+|};
 
 const initialState: AppState = {
   lists: {
     list1: {
-      todos: []
+      todos: {}
     }
   },
   navigationState: {
     listId: "list1"
   }
-};
-
-export const selectCurrentList = (state: AppState) => {
-  if (state.navigationState.listId == null) {
-    return;
-  }
-  const currentListId = state.navigationState.listId;
-  return state.lists[currentListId];
 };
 
 // We re-export an application-specific ActionCreator class

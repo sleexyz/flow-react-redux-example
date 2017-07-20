@@ -8,5 +8,5 @@ export type Todo = {
 };
 
 export type List = {
-  todos: Array<Todo>
+  todos: { [string]: Todo }
 };

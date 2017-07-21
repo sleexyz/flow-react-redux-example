@@ -1,8 +1,8 @@
 // @flow
 /* eslint no-unused-vars: 0 */
-
 import { applyMiddleware, createStore } from "redux";
-import * as ReduxUtils from "./redux_utils";
+
+import * as ReduxUtils from "./";
 
 /*
    Service Code

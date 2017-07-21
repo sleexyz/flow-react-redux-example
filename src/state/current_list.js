@@ -1,12 +1,11 @@
 // @flow
-import type { List } from "../types";
-import { ActionCreator } from "../store";
-import type { AppState } from "../store";
 import pushid from "pushid";
 
-export const modifyCurrentList = (fn: List => List) => (
-  state: AppState
-): AppState => {
+import type { List } from "types";
+import { ActionCreator } from "store";
+import type { AppState } from "state/app";
+
+const modifyCurrentList = (fn: List => List) => (state: AppState): AppState => {
   const currentListId = state.navigationState.listId;
   if (!currentListId) {
     throw new Error("no current list");

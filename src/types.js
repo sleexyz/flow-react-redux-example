@@ -1,5 +1,4 @@
 // @flow
-
 export type TodoState = "done" | "in-progress";
 
 export type Todo = {

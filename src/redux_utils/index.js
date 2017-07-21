@@ -1,5 +1,4 @@
 // @flow
-
 import Callable from "callable-class";
 
 export type Ops<State, Env> = {

@@ -1,11 +1,12 @@
 // @flow
 import React from "react";
 import { connect } from "react-redux";
-import type { WithDispatch } from "./store";
-import type { List } from "./types";
 import styled from "styled-components";
-import { deleteTodo, setTodoContent, addTodo } from "./store/current_list";
-import { TodoRow } from "./TodoRow";
+
+import type { WithDispatch } from "store";
+import type { List } from "types";
+import { deleteTodo, setTodoContent, addTodo } from "state/current_list";
+import { TodoRow } from "components/TodoRow";
 
 const Body = styled.div`
   padding: 20px;

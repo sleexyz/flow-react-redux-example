@@ -1,7 +1,8 @@
 // @flow
-import type { List } from "./types";
-import { ActionCreator } from "./store";
 import pushid from "pushid";
+
+import type { List } from "types";
+import { ActionCreator } from "store";
 
 export const addList: ActionCreator<
   List,

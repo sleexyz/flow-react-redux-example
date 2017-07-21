@@ -5,6 +5,7 @@ import styled from "styled-components";
 const Body = styled.div`display: flex;`;
 
 const Delete = styled.div`
+  cursor: pointer;
   &::before {
     content: "X";
     margin-right: 5px;

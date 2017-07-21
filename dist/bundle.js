@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d5058d55a080dfb9851"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b29c64c47cc2bc29f2f7"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29945,7 +29945,7 @@ var AppInner = function (_React$Component) {
           _react2.default.createElement(
             "h1",
             null,
-            "React + Redux + Flow"
+            "Flow + React + Redux"
           ),
           _react2.default.createElement(
             "a",

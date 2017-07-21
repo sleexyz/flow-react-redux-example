@@ -4,13 +4,13 @@ import styled from "styled-components";
 import { css } from "styled-components";
 import { connect } from "react-redux";
 
-import { Card, colors } from "styles";
-import type { AppState } from "state/app";
-import type { WithDispatch } from "store";
-import { selectCurrentList } from "state/current_list";
-import { TabContent } from "components/TabContent";
-import * as Actions from "actions";
-import type { List } from "types";
+import { Card, colors } from "@src/styles";
+import type { AppState } from "@src/state/app";
+import type { WithDispatch } from "@src/store";
+import { selectCurrentList } from "@src/state/current_list";
+import { TabContent } from "@src/components/TabContent";
+import * as Actions from "@src/actions";
+import type { List } from "@src/types";
 
 const Body = styled.div`
   ${Card()};

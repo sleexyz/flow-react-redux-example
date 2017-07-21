@@ -3,9 +3,9 @@ import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
 import type { Dispatch } from "redux";
 
-import * as ReduxUtils from "redux_utils";
-import * as Services from "services";
-import * as App from "state/app";
+import * as ReduxUtils from "@src/redux_utils";
+import * as Services from "@src/services";
+import * as App from "@src/state/app";
 
 // We re-export an application-specific ActionCreator class
 export class ActionCreator<A, B> extends ReduxUtils.ActionCreator<

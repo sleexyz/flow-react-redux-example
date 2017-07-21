@@ -1,5 +1,5 @@
 // @flow
-import type { AppState } from "state/app";
+import type { AppState } from "@src/state/app";
 
 export type T = {
   saveToLocalStorage(AppState): void,

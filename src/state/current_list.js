@@ -1,9 +1,9 @@
 // @flow
 import pushid from "pushid";
 
-import type { List } from "types";
-import { ActionCreator } from "store";
-import type { AppState } from "state/app";
+import type { List } from "@src/types";
+import { ActionCreator } from "@src/store";
+import type { AppState } from "@src/state/app";
 
 const modifyCurrentList = (fn: List => List) => (state: AppState): AppState => {
   const currentListId = state.navigationState.listId;

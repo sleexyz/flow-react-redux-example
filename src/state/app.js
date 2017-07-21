@@ -1,5 +1,5 @@
 // @flow
-import type { List } from "types";
+import type { List } from "@src/types";
 
 export type AppState = {|
   lists: {

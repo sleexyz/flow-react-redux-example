@@ -6,8 +6,7 @@
 [libs]
 
 [options]
-module.system.node.resolve_dirname=src
-module.system.node.resolve_dirname=node_modules
+module.name_mapper='^@src\/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 
 [version]
 0.48.0

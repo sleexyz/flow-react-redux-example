@@ -3,9 +3,9 @@ import React from "react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 
-import { App } from "components/App";
-import { makeStore } from "store";
-import { makeEnv } from "services";
+import { App } from "@src/components/App";
+import { makeStore } from "@src/store";
+import { makeEnv } from "@src/services";
 
 const globalEnv = makeEnv();
 const globalStore = makeStore(globalEnv);

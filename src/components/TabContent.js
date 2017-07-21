@@ -3,10 +3,10 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import type { WithDispatch } from "store";
-import type { List } from "types";
-import { deleteTodo, setTodoContent, addTodo } from "state/current_list";
-import { TodoRow } from "components/TodoRow";
+import type { WithDispatch } from "@src/store";
+import type { List } from "@src/types";
+import { deleteTodo, setTodoContent, addTodo } from "@src/state/current_list";
+import { TodoRow } from "@src/components/TodoRow";
 
 const Body = styled.div`
   padding: 20px;

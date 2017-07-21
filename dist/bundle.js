@@ -60,7 +60,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "752e0e8dd5604486312c"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "1d5058d55a080dfb9851"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -29949,7 +29949,7 @@ var AppInner = function (_React$Component) {
           ),
           _react2.default.createElement(
             "a",
-            { href: "https://github.com/sleexyz/foo" },
+            { href: "https://github.com/sleexyz/flow-react-redux-example" },
             "(source)"
           )
         ),

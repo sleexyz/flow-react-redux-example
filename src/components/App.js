@@ -115,7 +115,9 @@ class AppInner extends React.Component {
       <Body>
         <Header>
           <h1>React + Redux + Flow</h1>
-          <a href={"https://github.com/sleexyz/foo"}>(source)</a>
+          <a href={"https://github.com/sleexyz/flow-react-redux-example"}>
+            (source)
+          </a>
         </Header>
         {this.renderTabBar()}
         <ContentDiv>

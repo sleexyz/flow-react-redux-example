@@ -13,24 +13,31 @@ import * as AppActions from "@src/state/app_actions";
 import type { List } from "@src/types";
 
 const Body = styled.div`
-  ${Card()};
-  margin: 20vh 20vw;
-  height: 60vh;
+  margin: 60px 20vw;
+  height: calc(60vh - 100px);
   width: 60vw;
   font-family: monospace;
+`;
+
+const Header = styled.div`
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const tabBarHeight = "30px";
 const TabBar = styled.div`
   display: flex;
   height: ${tabBarHeight};
-  overflow-y: hidden;
-  overflow-x: auto;
+  width: 100%;
 `;
 
 const ContentDiv = styled.div`
   height: calc(100% - ${tabBarHeight});
   overflow-y: auto;
+  ${Card()};
+  border-top: 0.5px solid #aaaaaa;
 `;
 
 const AddNewMessage = styled.div`
@@ -50,6 +57,10 @@ const Tab = css`
   border-bottom: none;
   border-radius: 2px 2px 0 0;
   margin-right: 1px;
+  flex: 0 1 auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   cursor: pointer;
 `;
 
@@ -57,6 +68,8 @@ const ListTab = styled.div`
   background: ${props => (props.isActive ? colors.white : colors.grey)};
   color: ${props => (props.isActive ? colors.black : colors.white)};
   ${Tab};
+  box-shadow: ${props =>
+    props.isActive ? `0 1px 0 0 ${colors.white}` : "none"};
 `;
 
 const NewTab = styled.div`
@@ -100,6 +113,10 @@ class AppInner extends React.Component {
     }
     return (
       <Body>
+        <Header>
+          <h1>React + Redux + Flow</h1>
+          <a href={"https://github.com/sleexyz/foo"}>(source)</a>
+        </Header>
         {this.renderTabBar()}
         <ContentDiv>
           {inner}

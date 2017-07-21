@@ -55,8 +55,8 @@
   "scripts": {
     "build": "webpack --config=./webpack.config-dev.js",
     "precommit": "lint-staged",
-    "cleanup": "rm -rf dist/generated",
-    "preview": "yarn build && http-server dist -p 9000 -o",
+    "cleanup": "rm -rf docs/generated",
+    "preview": "yarn build && http-server docs -p 9000 -o",
     "start": "node dev-server.js",
     "lint": "eslint src/**/*.js",
     "test": "yarn lint && flow && yarn unit-test",

@@ -15,6 +15,6 @@ mainApp.use(webpackDevMiddleware(compiler, {
 }));
 
 mainApp.use(webpackHotMiddleware(compiler));
-mainApp.use(express.static('dist'));
+mainApp.use(express.static('docs'));
 
 mainApp.listen(8080);

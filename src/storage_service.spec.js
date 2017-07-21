@@ -21,13 +21,16 @@ describe("storageService", () => {
       let result;
       global.localStorage = {
         setItem: jest.fn((key, value) => {
-          result = mockData;
+          result = value;
         })
       };
       const mockData = { foo: "hello" };
       storageService.saveToLocalStorage((mockData: any));
-      expect(global.localStorage.setItem).toHaveBeenCalledWith("App", mockData);
-      expect(result).toEqual(mockData);
+      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+        "App",
+        JSON.stringify(mockData)
+      );
+      expect(result).toEqual(JSON.stringify(mockData));
     });
   });
 });

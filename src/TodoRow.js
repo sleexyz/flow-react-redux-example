@@ -16,13 +16,21 @@ const Input = styled.input`flex: 1 0 auto;`;
 
 function throttle(fn: void => void): void => void {
   let shouldRun = true;
+  let shouldRunOnTimeout = false;
   return value => {
     if (shouldRun) {
+      fn();
       setTimeout(() => {
-        fn();
         shouldRun = true;
+        if (shouldRunOnTimeout) {
+          fn();
+        }
+        shouldRunOnTimeout = false;
       }, 1000);
       shouldRun = false;
+      shouldRunOnTimeout = false;
+    } else {
+      shouldRunOnTimeout = true;
     }
   };
 }

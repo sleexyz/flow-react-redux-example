@@ -15,7 +15,7 @@ export type AppState = {|
   |}
 |};
 
-const initialState: AppState = {
+const defaultState: AppState = {
   lists: {
     list1: {
       todos: {}
@@ -38,12 +38,28 @@ type Action = ReduxUtils.Action<AppState, Services.Env, any, any>;
 
 export type WithDispatch<A: {}> = A & { dispatch: Dispatch<Action> };
 
-export const makeStore = (env: Services.Env) =>
-  createStore(
+const makeSaveToLocalStorageMiddleware = (env: Services.Env) => {
+  let state = undefined;
+  return store => next => action => {
+    const nextState = store.getState();
+    if (state !== nextState) {
+      env.storageService.saveToLocalStorage(nextState);
+      state = nextState;
+    }
+    return next(action);
+  };
+};
+
+export const makeStore = (env: Services.Env) => {
+  const initialState =
+    env.storageService.loadFromLocalStorage() || defaultState;
+  return createStore(
     ReduxUtils.makeReducer(initialState),
     applyMiddleware(
       // ReduxUtils
       ReduxUtils.hijackDispatch({ env }),
+      // LocalStorage syncing
+      makeSaveToLocalStorageMiddleware(env),
       // Logger
       createLogger({
         level: {
@@ -59,3 +75,4 @@ export const makeStore = (env: Services.Env) =>
       })
     )
   );
+};

@@ -9,9 +9,14 @@ export type T = {
 
 export const make = (env: {}): T => ({
   saveToLocalStorage(state: AppState) {
-    global.localStorage.setItem("App", state);
+    global.localStorage.setItem("App", JSON.stringify(state));
   },
   loadFromLocalStorage() {
-    return JSON.parse(global.localStorage.getItem("App"));
+    const item = global.localStorage.getItem("App");
+    if (!item) {
+      return;
+    } else {
+      return JSON.parse(item);
+    }
   }
 });

@@ -1,7 +1,6 @@
 // @flow
 import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
-import type { Dispatch } from "redux";
 
 import * as ReduxUtils from "@src/redux_utils";
 import * as Services from "@src/services";
@@ -15,9 +14,7 @@ export class ActionCreator<A, B> extends ReduxUtils.ActionCreator<
   B
 > {}
 
-type Action = ReduxUtils.Action<App.AppState, Services.Env, any, any>;
-
-export type WithDispatch<A: {}> = A & { dispatch: Dispatch<Action> };
+export type WithDispatch<A: {}> = ReduxUtils.WithDispatch<A>;
 
 const makeSaveToLocalStorageMiddleware = (env: Services.Env) => {
   let state = undefined;

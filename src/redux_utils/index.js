@@ -93,3 +93,8 @@ export const hijackDispatch = <State, Env>({ env }: { env: Env }) => ({
   }
   return next(action);
 };
+
+// For interfacing with components
+export type WithDispatch<A: {}> = A & {
+  dispatch: <B>(Action<*, *, *, B>) => B
+};

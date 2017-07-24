@@ -1,6 +1,7 @@
 // @flow
 /* eslint no-unused-vars: 0 */
 import { applyMiddleware, createStore } from "redux";
+import React from "react";
 
 import * as ReduxUtils from "./";
 
@@ -43,6 +44,15 @@ class ActionCreator<A, B> extends ReduxUtils.ActionCreator<
     Actions Code
   */
 
+const getNumber: ActionCreator<
+  void,
+  number
+> = new ActionCreator("addTest", num => ops => {
+  const state = ops.getState();
+  ops.env.logService.log("hello");
+  return state.counter;
+});
+
 const add1: ActionCreator<
   number,
   void
@@ -58,17 +68,17 @@ const add2: ActionCreator<
 > = new ActionCreator("addTest", num => ops => {
   const state = ops.getState();
   // $FlowFixMe
-  state.as(); // `as` doesn't exist
+  state.as(); // error: `as` doesn't exist
   // $FlowFixMe
-  ops.asdf(); // `asdf` is not a valid op
+  ops.asdf(); // error: `asdf` is not a valid op
   // $FlowFixMe
-  ops.setState(); // invalid State
+  ops.setState(); // error: invalid State
   // $FlowFixMe
-  num.asdf(); // invalid access of input type
+  num.asdf(); // error: invalid access of input type
   // $FlowFixMe
   ops.env.logService.asdfasdfd("hello"); // invalid env
   // $FlowFixMe
-  return 2; // invalid output
+  return 2; // error: invalid output
 });
 
 /*
@@ -88,8 +98,28 @@ const store = createStore(
   Component Code
 */
 
-const correct = add1(999);
-// $FlowFixMe
-const incorrect1 = add1("fail"); // invalid payload
-// $FlowFixMe
-const incorrect2 = add1(); // undefined payload
+type Props = {
+  foo: number
+};
+
+class MyComponent extends React.Component {
+  props: ReduxUtils.WithDispatch<Props>;
+  render() {
+    (this.props.foo: number);
+    this.props.dispatch(add1(999)); // ok
+    (this.props.dispatch(getNumber()): number); // ok
+
+    // $FlowFixMe
+    (this.props.foo: string); // error: not a string
+    // $FlowFixMe
+    this.props.dispatch(add1("fail")); // error: invalid payload
+    // $FlowFixMe
+    this.props.dispatch(add1()); // error: undefined payload
+    // $FlowFixMe
+    (this.props.dispatch(getNumber(1)): number); // error: invalid payload
+    // $FlowFixMe
+    (this.props.dispatch(getNumber()): string); // error: wrong return type
+
+    return <div />;
+  }
+}

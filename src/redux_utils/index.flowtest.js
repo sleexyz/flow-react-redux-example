@@ -17,11 +17,7 @@ const initialState = {
   counter: 1
 };
 
-class ActionCreator<A, B> extends ReduxUtils.ActionCreator<
-  AppState,
-  A,
-  B
-> {}
+class ActionCreator<A, B> extends ReduxUtils.ActionCreator<AppState, A, B> {}
 
 /*
     Actions Code
@@ -66,9 +62,7 @@ const add2: ActionCreator<
 
 const store = createStore(
   ReduxUtils.makeReducer(initialState),
-  applyMiddleware(
-    ReduxUtils.hijackDispatch
-  )
+  applyMiddleware(ReduxUtils.hijackDispatch)
 );
 
 /*

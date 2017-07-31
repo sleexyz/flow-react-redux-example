@@ -52,10 +52,9 @@ type SetStateAction<State> = {
   parentAction: Action<State, *, *>
 };
 
-export const hijackDispatch = <State>({
-  getState,
-  dispatch
-}: *) => (next: *) => (action: Action<State, any, any>) => {
+export const hijackDispatch = <State>({ getState, dispatch }: *) => (
+  next: *
+) => (action: Action<State, any, any>) => {
   if (action.type === "setState") {
     return next(action);
   }

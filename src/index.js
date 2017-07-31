@@ -5,10 +5,8 @@ import ReactDOM from "react-dom";
 
 import { App } from "@src/components/App";
 import { makeStore } from "@src/store";
-import { makeEnv } from "@src/services";
 
-const globalEnv = makeEnv();
-const globalStore = makeStore(globalEnv);
+const globalStore = makeStore();
 
 const renderApp = () => {
   const elem = (

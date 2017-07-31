@@ -1,12 +1,11 @@
 // @flow
 import Callable from "callable-class";
 
-export type Ops<State, Env> = {
-  env: Env,
+export type Ops<State> = {
   setState: State => void,
   getState: void => State,
   modifyState: ((State) => State) => void,
-  dispatch: <A, B>(Action<State, Env, A, B>) => B
+  dispatch: <A, B>(Action<State, A, B>) => B
 };
 
 type Reducer<State> = (State, *) => State;
@@ -21,21 +20,21 @@ export const makeReducer = <State>(initialState: State): Reducer<State> => (
   return state;
 };
 
-export type Action<State, Env, A, B> = {
+export type Action<State, A, B> = {
   type: string,
-  sourceActionCreator: ActionCreator<State, Env, A, B>,
+  sourceActionCreator: ActionCreator<State, A, B>,
   parentAction?: *,
   childActions?: Array<*>,
-  run: (Ops<State, Env>) => B,
+  run: (Ops<State>) => B,
   result?: B
 };
 
-export class ActionCreator<State, Env, A, B> extends Callable<
+export class ActionCreator<State, A, B> extends Callable<
   A,
-  Action<State, Env, A, B>
+  Action<State, A, B>
 > {
   actionName: string;
-  constructor(actionName: string, f: A => (Ops<State, Env>) => B) {
+  constructor(actionName: string, f: A => (Ops<State>) => B) {
     let getThis;
     super(payload => ({
       run: ops => f(payload)(ops),
@@ -47,22 +46,21 @@ export class ActionCreator<State, Env, A, B> extends Callable<
   }
 }
 
-type SetStateAction<State, Env> = {
+type SetStateAction<State> = {
   type: "setState",
   payload: State,
-  parentAction: Action<State, Env, *, *>
+  parentAction: Action<State, *, *>
 };
 
-export const hijackDispatch = <State, Env>({ env }: { env: Env }) => ({
+export const hijackDispatch = <State>({
   getState,
   dispatch
-}: *) => (next: *) => (action: Action<State, Env, any, any>) => {
+}: *) => (next: *) => (action: Action<State, any, any>) => {
   if (action.type === "setState") {
     return next(action);
   }
   if (typeof action.run === "function") {
-    const ops: Ops<State, Env> = {
-      env,
+    const ops: Ops<State> = {
       getState,
       dispatch: childAction => {
         Object.assign(childAction, { parentAction: action });
@@ -73,7 +71,7 @@ export const hijackDispatch = <State, Env>({ env }: { env: Env }) => ({
         return dispatch(childAction);
       },
       setState: payload => {
-        const setStateAction: SetStateAction<State, Env> = {
+        const setStateAction: SetStateAction<State> = {
           type: "setState",
           payload,
           parentAction: action
@@ -96,5 +94,5 @@ export const hijackDispatch = <State, Env>({ env }: { env: Env }) => ({
 
 // For interfacing with components
 export type WithDispatch<A: {}> = A & {
-  dispatch: <B>(Action<*, *, *, B>) => B
+  dispatch: <B>(Action<*, *, B>) => B
 };

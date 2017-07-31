@@ -6,22 +6,6 @@ import React from "react";
 import * as ReduxUtils from "./";
 
 /*
-   Service Code
-  */
-
-type Env = {
-  logService: {
-    log: mixed => void
-  }
-};
-
-const makeEnv = (): Env => ({
-  logService: {
-    log: () => {}
-  }
-});
-
-/*
     Store Code
   */
 
@@ -33,12 +17,7 @@ const initialState = {
   counter: 1
 };
 
-class ActionCreator<A, B> extends ReduxUtils.ActionCreator<
-  AppState,
-  Env,
-  A,
-  B
-> {}
+class ActionCreator<A, B> extends ReduxUtils.ActionCreator<AppState, A, B> {}
 
 /*
     Actions Code
@@ -49,7 +28,6 @@ const getNumber: ActionCreator<
   number
 > = new ActionCreator("addTest", num => ops => {
   const state = ops.getState();
-  ops.env.logService.log("hello");
   return state.counter;
 });
 
@@ -59,7 +37,6 @@ const add1: ActionCreator<
 > = new ActionCreator("addTest", num => ops => {
   const state = ops.getState();
   ops.setState({ ...state, counter: state.counter + num });
-  ops.env.logService.log("hello");
 });
 
 const add2: ActionCreator<
@@ -76,8 +53,6 @@ const add2: ActionCreator<
   // $FlowFixMe
   num.asdf(); // error: invalid access of input type
   // $FlowFixMe
-  ops.env.logService.asdfasdfd("hello"); // invalid env
-  // $FlowFixMe
   return 2; // error: invalid output
 });
 
@@ -87,11 +62,7 @@ const add2: ActionCreator<
 
 const store = createStore(
   ReduxUtils.makeReducer(initialState),
-  applyMiddleware(
-    ReduxUtils.hijackDispatch({
-      env: makeEnv()
-    })
-  )
+  applyMiddleware(ReduxUtils.hijackDispatch)
 );
 
 /*

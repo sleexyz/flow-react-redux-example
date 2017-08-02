@@ -5,6 +5,7 @@
   "repository": "git@github.com:sleexyz/example-flow-react.git",
   "author": "Sean Lee <freshdried@gmail.com>",
   "dependencies": {
+    "babel-preset-env": "^1.6.0",
     "bluebird": "^3.5.0",
     "callable-class": "^2.0.0",
     "pushid": "^1.0.0",

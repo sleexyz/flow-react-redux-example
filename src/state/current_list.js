@@ -1,13 +1,12 @@
 // @flow
 import pushid from "pushid";
 
-import type { List } from "@src/types";
+import * as Types from "@src/types";
 import { ActionCreator, modifyState } from "@src/store";
-import * as App from "@src/state/app";
 
-const modifyCurrentList = (fn: List => List) => (
-  state: App.State
-): App.State => {
+const modifyCurrentList = (fn: Types.List => Types.List) => (
+  state: Types.State
+): Types.State => {
   const currentListId = state.navigationState.listId;
   if (!currentListId) {
     throw new Error("no current list");
@@ -18,7 +17,7 @@ const modifyCurrentList = (fn: List => List) => (
   };
 };
 
-export const selectCurrentList = (state: App.State): ?List => {
+export const selectCurrentList = (state: Types.State): ?Types.List => {
   if (state.navigationState.listId == null) {
     return;
   }
@@ -26,7 +25,7 @@ export const selectCurrentList = (state: App.State): ?List => {
   return state.lists[currentListId];
 };
 
-const _addTodo = () => (list: List): List => {
+const _addTodo = () => (list: Types.List): Types.List => {
   const newTodo = {
     content: "",
     state: "in-progress"
@@ -36,7 +35,7 @@ const _addTodo = () => (list: List): List => {
   };
 };
 
-const _deleteTodo = (todoId: string) => (list: List): List => {
+const _deleteTodo = (todoId: string) => (list: Types.List): Types.List => {
   const newTodos = { ...list.todos };
   delete newTodos[todoId];
   return {
@@ -45,8 +44,8 @@ const _deleteTodo = (todoId: string) => (list: List): List => {
 };
 
 const _setTodoContent = (todoId: string, content: string) => (
-  list: List
-): List => {
+  list: Types.List
+): Types.List => {
   const todo = list.todos[todoId];
   if (!todo) {
     throw new Error("todoId not found");

@@ -9,7 +9,7 @@ import type { WithDispatch } from "@src/store";
 import { selectCurrentList } from "@src/state/current_list";
 import { TabContent } from "@src/components/TabContent";
 import * as AppState from "@src/state/app";
-import type { List } from "@src/types";
+import * as Types from "@src/types";
 
 const Body = styled.div`
   margin: 60px 20vw;
@@ -85,12 +85,12 @@ const NewTab = styled.div`
 `;
 
 type Props = {
-  lists: { [string]: List },
-  currentList: ?List,
+  lists: { [string]: Types.List },
+  currentList: ?Types.List,
   currentListId: ?string
 };
 
-const mapStateToProps = (state: AppState.State): Props => ({
+const mapStateToProps = (state: Types.State): Props => ({
   lists: state.lists,
   currentList: selectCurrentList(state),
   currentListId: state.navigationState.listId

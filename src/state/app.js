@@ -3,15 +3,6 @@ import pushid from "pushid";
 import type { List } from "@src/types";
 import { ActionCreator, setState } from "@src/store";
 
-export type State = {|
-  lists: {
-    [listId: string]: List
-  },
-  navigationState: {
-    listId: void | string
-  }
-|};
-
 export const addList: ActionCreator<
   List,
   string

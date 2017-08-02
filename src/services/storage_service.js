@@ -1,11 +1,11 @@
 // @flow
-import * as App from "@src/state/app";
+import * as Types from "@src/types";
 
-export function saveToLocalStorage(state: App.State): void {
+export function saveToLocalStorage(state: Types.State): void {
   global.localStorage.setItem("App", JSON.stringify(state));
 }
 
-export function loadFromLocalStorage(): ?App.State {
+export function loadFromLocalStorage(): ?Types.State {
   const item = global.localStorage.getItem("App");
   if (!item) {
     return;

@@ -9,3 +9,12 @@ export type Todo = {
 export type List = {
   todos: { [string]: Todo }
 };
+
+export type State = {|
+  lists: {
+    [listId: string]: List
+  },
+  navigationState: {
+    listId: void | string
+  }
+|};

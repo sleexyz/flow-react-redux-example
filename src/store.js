@@ -1,13 +1,13 @@
 // @flow
 import { applyMiddleware, createStore } from "redux";
 
-import * as App from "@src/state/app";
+import * as Types from "@src/types";
 import * as StorageService from "@src/services/storage_service";
 import Callable from "callable-class";
 
 type Ops = {
   dispatch: <B>((Ops => B) | { type: string }) => B,
-  getState: () => App.State
+  getState: () => Types.State
 };
 
 export class ActionCreator<A, B> extends Callable<A, (Ops) => B> {
@@ -40,12 +40,12 @@ const saveToLocalStorageMiddleware = (() => {
   };
 })();
 
-export const setState = (state: App.State) => ({
+export const setState = (state: Types.State) => ({
   type: "setState",
   payload: state
 });
 
-export const modifyState = (f: App.State => App.State) => ({
+export const modifyState = (f: Types.State => Types.State) => ({
   type: "modifyState",
   payload: f
 });
@@ -66,7 +66,7 @@ const safeThunk = store => next => action => {
   return next(action);
 };
 
-const defaultState: App.State = {
+const defaultState: Types.State = {
   lists: {
     list1: {
       todos: {}

@@ -5,11 +5,10 @@ import { css } from "styled-components";
 import { connect } from "react-redux";
 
 import { Card, colors } from "@src/styles";
-import type { AppState } from "@src/state/app";
 import type { WithDispatch } from "@src/store";
 import { selectCurrentList } from "@src/state/current_list";
 import { TabContent } from "@src/components/TabContent";
-import * as AppActions from "@src/state/app_actions";
+import * as AppState from "@src/state/app";
 import type { List } from "@src/types";
 
 const Body = styled.div`
@@ -91,7 +90,7 @@ type Props = {
   currentListId: ?string
 };
 
-const mapStateToProps = (state: AppState): Props => ({
+const mapStateToProps = (state: AppState.State): Props => ({
   lists: state.lists,
   currentList: selectCurrentList(state),
   currentListId: state.navigationState.listId
@@ -107,7 +106,7 @@ class AppInner extends React.Component {
     } else {
       inner = (
         <AddNewMessage
-          onClick={() => this.props.dispatch(AppActions.addNewListAndFocus())}
+          onClick={() => this.props.dispatch(AppState.addNewListAndFocus())}
         />
       );
     }
@@ -134,7 +133,7 @@ class AppInner extends React.Component {
         <ListTab
           key={listId}
           isActive={isActive}
-          onClick={() => this.props.dispatch(AppActions.focusList(listId))}
+          onClick={() => this.props.dispatch(AppState.focusList(listId))}
         >
           {listId}
         </ListTab>
@@ -144,7 +143,7 @@ class AppInner extends React.Component {
       <TabBar>
         {tabs}
         <NewTab
-          onClick={() => this.props.dispatch(AppActions.addNewListAndFocus())}
+          onClick={() => this.props.dispatch(AppState.addNewListAndFocus())}
         />
       </TabBar>
     );

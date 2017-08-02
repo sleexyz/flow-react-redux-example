@@ -6,7 +6,7 @@ import styled from "styled-components";
 import type { WithDispatch } from "@src/store";
 import type { List } from "@src/types";
 import { deleteTodo, setTodoContent, addTodo } from "@src/state/current_list";
-import { deleteListAndFocusToNextList } from "@src/state/app_actions";
+import * as App from "@src/state/app";
 import { TodoRow } from "@src/components/TodoRow";
 
 const Page = styled.div`
@@ -83,7 +83,7 @@ class TabContentInner extends React.Component {
           <DeleteList
             onClick={() =>
               this.props.dispatch(
-                deleteListAndFocusToNextList(this.props.listId)
+                App.deleteListAndFocusToNextList(this.props.listId)
               )}
           />
         </Footer>

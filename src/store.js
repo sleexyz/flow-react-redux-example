@@ -7,7 +7,7 @@ import Callable from "callable-class";
 
 type Ops = {
   dispatch: <B>((Ops => B) | { type: string }) => B,
-  getState: () => App.AppState
+  getState: () => App.State
 };
 
 export class ActionCreator<A, B> extends Callable<A, (Ops) => B> {
@@ -40,12 +40,12 @@ const saveToLocalStorageMiddleware = (() => {
   };
 })();
 
-export const setState = (state: App.AppState) => ({
+export const setState = (state: App.State) => ({
   type: "setState",
   payload: state
 });
 
-export const modifyState = (f: App.AppState => App.AppState) => ({
+export const modifyState = (f: App.State => App.State) => ({
   type: "modifyState",
   payload: f
 });
@@ -66,9 +66,19 @@ const safeThunk = store => next => action => {
   return next(action);
 };
 
+const defaultState: App.State = {
+  lists: {
+    list1: {
+      todos: {}
+    }
+  },
+  navigationState: {
+    listId: "list1"
+  }
+};
+
 export const makeStore = () => {
-  const initialState =
-    StorageService.loadFromLocalStorage() || App.defaultState;
+  const initialState = StorageService.loadFromLocalStorage() || defaultState;
   return createStore(
     reducer,
     initialState,

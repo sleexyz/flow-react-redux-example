@@ -3,9 +3,11 @@ import pushid from "pushid";
 
 import type { List } from "@src/types";
 import { ActionCreator, modifyState } from "@src/store";
-import type { AppState } from "@src/state/app";
+import * as App from "@src/state/app";
 
-const modifyCurrentList = (fn: List => List) => (state: AppState): AppState => {
+const modifyCurrentList = (fn: List => List) => (
+  state: App.State
+): App.State => {
   const currentListId = state.navigationState.listId;
   if (!currentListId) {
     throw new Error("no current list");
@@ -16,7 +18,7 @@ const modifyCurrentList = (fn: List => List) => (state: AppState): AppState => {
   };
 };
 
-export const selectCurrentList = (state: AppState): ?List => {
+export const selectCurrentList = (state: App.State): ?List => {
   if (state.navigationState.listId == null) {
     return;
   }

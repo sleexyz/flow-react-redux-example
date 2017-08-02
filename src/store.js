@@ -1,19 +1,32 @@
 // @flow
 import { applyMiddleware, createStore } from "redux";
-import { createLogger } from "redux-logger";
 
-import * as ReduxUtils from "@src/redux_utils";
 import * as App from "@src/state/app";
 import * as StorageService from "@src/services/storage_service";
+import Callable from "callable-class";
 
-// We re-export an application-specific ActionCreator class
-export class ActionCreator<A, B> extends ReduxUtils.ActionCreator<
-  App.AppState,
-  A,
-  B
-> {}
+type Ops = {
+  dispatch: <B>((Ops => B) | { type: string }) => B,
+  getState: () => App.AppState
+};
 
-export type WithDispatch<A: {}> = ReduxUtils.WithDispatch<A>;
+export class ActionCreator<A, B> extends Callable<A, (Ops) => B> {
+  toFinish: ?Promise<B>;
+  constructor(f: A => Ops => B) {
+    super(x => ops => {
+      const y = f(x)(ops);
+      if (y && typeof (y: any).then === "function") {
+        (this: any).toFinish = y;
+      }
+      return y;
+    });
+  }
+}
+
+export type WithDispatch<A: {}> = {
+  ...$Exact<A>,
+  dispatch: <B>((Ops => B) | { type: string }) => B
+};
 
 const saveToLocalStorageMiddleware = (() => {
   let state = undefined;
@@ -27,29 +40,38 @@ const saveToLocalStorageMiddleware = (() => {
   };
 })();
 
+export const setState = (state: App.AppState) => ({
+  type: "setState",
+  payload: state
+});
+
+export const modifyState = (f: App.AppState => App.AppState) => ({
+  type: "modifyState",
+  payload: f
+});
+
+const reducer = (state, action) => {
+  if (action.type === "setState") {
+    return action.payload;
+  } else if (action.type === "modifyState") {
+    return action.payload(state);
+  }
+  return state;
+};
+
+const safeThunk = store => next => action => {
+  if (typeof action === "function") {
+    return action(store);
+  }
+  return next(action);
+};
+
 export const makeStore = () => {
   const initialState =
     StorageService.loadFromLocalStorage() || App.defaultState;
   return createStore(
-    ReduxUtils.makeReducer(initialState),
-    applyMiddleware(
-      // ReduxUtils
-      ReduxUtils.hijackDispatch,
-      // LocalStorage syncing
-      saveToLocalStorageMiddleware,
-      // Logger
-      createLogger({
-        level: {
-          prevState: false,
-          action: "log",
-          nextState: false,
-          error: "log"
-        },
-        predicate: (getState, action) => !action.parentAction,
-        diff: true,
-        diffPredicate: (getState, action) => action.type === "setState",
-        collapsed: (getState, action) => action.type !== "setState"
-      })
-    )
+    reducer,
+    initialState,
+    applyMiddleware(saveToLocalStorageMiddleware, safeThunk)
   );
 };

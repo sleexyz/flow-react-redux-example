@@ -13,7 +13,6 @@ type Ops = {
 export class ActionCreator<A, B> extends Callable<A, (Ops) => B> {
   toFinish: ?Promise<B>;
   constructor(f: A => Ops => B) {
-    // super(f);
     super(x => ops => {
       const y = f(x)(ops);
       if (y && typeof (y: any).then === "function") {

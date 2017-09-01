@@ -2,7 +2,11 @@
 import React from "react";
 import styled from "styled-components";
 
-import { type WithDispatch, safeConnect, type SafeConnect } from "@src/store";
+import {
+  type WithContainerProps,
+  safeConnect,
+  type SafeConnect
+} from "@src/store";
 import type { List } from "@src/types";
 import { deleteTodo, setTodoContent, addTodo } from "@src/state/current_list";
 import * as App from "@src/state/app";
@@ -58,12 +62,13 @@ type ContainerProps = {
 
 const mapStateToProps = x => ({ foo: "hello" });
 
-type Props = WithDispatch<{
-  ...$Exact<ContainerProps>,
-  list: List,
-  listId: string,
-  dispatch: Function
-}>;
+type Props = WithContainerProps<
+  ContainerProps,
+  {
+    list: List,
+    listId: string
+  }
+>;
 
 class TabContentInner extends React.Component {
   props: Props;

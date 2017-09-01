@@ -40,6 +40,12 @@ export type WithDispatch<A: {}> = {
   dispatch: <B>((Ops => B) | { type: string }) => B
 };
 
+export type WithContainerProps<ContainerProps: {}, A: {}> = {
+  ...$Exact<ContainerProps>,
+  ...$Exact<A>,
+  dispatch: <B>((Ops => B) | { type: string }) => B
+};
+
 const saveToLocalStorageMiddleware = (() => {
   let state = undefined;
   return store => next => action => {

@@ -9,4 +9,3 @@
 module.name_mapper='^@src\/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 
 [version]
-0.48.0

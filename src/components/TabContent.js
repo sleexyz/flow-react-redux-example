@@ -1,9 +1,8 @@
 // @flow
 import React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
 
-import type { WithDispatch } from "@src/store";
+import { type WithDispatch, safeConnect, type SafeConnect } from "@src/store";
 import type { List } from "@src/types";
 import { deleteTodo, setTodoContent, addTodo } from "@src/state/current_list";
 import * as App from "@src/state/app";
@@ -53,12 +52,23 @@ const AddTodo = styled.div`
   }
 `;
 
+type ContainerProps = {
+  foo: string
+};
+
+const mapStateToProps = x => ({ foo: "hello" });
+
+type Props = WithDispatch<{
+  ...$Exact<ContainerProps>,
+  list: List,
+  listId: string,
+  dispatch: Function
+}>;
+
 class TabContentInner extends React.Component {
-  props: WithDispatch<{
-    list: List,
-    listId: string
-  }>;
+  props: Props;
   render() {
+    this.props.foo;
     const todos = Object.keys(this.props.list.todos).map(todoId => {
       const todo = this.props.list.todos[todoId];
       return (
@@ -91,4 +101,7 @@ class TabContentInner extends React.Component {
     );
   }
 }
-export const TabContent = connect()(TabContentInner);
+
+export const TabContent = (safeConnect: SafeConnect<Props, ContainerProps>)(
+  mapStateToProps
+)(TabContentInner);

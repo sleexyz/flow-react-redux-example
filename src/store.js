@@ -1,5 +1,7 @@
 // @flow
+import React from "react";
 import { applyMiddleware, createStore } from "redux";
+import { connect } from "react-redux";
 
 import * as Types from "@src/types";
 import * as StorageService from "@src/services/storage_service";
@@ -22,6 +24,16 @@ export class ActionCreator<A, B> extends Callable<A, (Ops) => B> {
     });
   }
 }
+
+export type SafeConnect<P: {}, CP: {}> = (
+  (Types.State) => CP
+) => (
+  Class<React.Component<void, P, *>>
+) => Class<
+  React.Component<void, $Diff<P, { ...$Exact<CP>, dispatch: Function }>, *>
+>;
+
+export const safeConnect = (connect: any);
 
 export type WithDispatch<A: {}> = {
   ...$Exact<A>,

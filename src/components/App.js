@@ -153,11 +153,13 @@ class AppInner extends React.Component {
     if (this.props.currentList == null) {
       return <div>Something went wrong!</div>;
     }
-    const props = {
-      list: this.props.currentList,
-      listId: this.props.currentListId
-    };
-    return <TabContent {...props} />;
+    /* const props = {
+     *   list: this.props.currentList,
+     *   listId: this.props.currentListId
+     * };*/
+    // $FlowFixMe
+    return <TabContent />;
+    /* return <TabContent {...props} />;*/
   }
 }
 

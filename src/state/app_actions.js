@@ -2,38 +2,36 @@
 import pushid from "pushid";
 
 import type { List } from "@src/types";
-import { ActionCreator } from "@src/store";
+import { makeAction, type Action, setState } from "@src/store";
 
-export const addList: ActionCreator<
-  List,
-  string
-> = new ActionCreator("addList", newList => ops => {
-  const state = ops.getState();
+export const addList: Action<List, string> = makeAction(newList => store => {
+  const state = store.getState();
   const newListId = pushid();
-  ops.setState({ ...state, lists: { ...state.lists, [newListId]: newList } });
+  store.dispatch(
+    setState({ ...state, lists: { ...state.lists, [newListId]: newList } })
+  );
   return newListId;
 });
 
-export const focusList: ActionCreator<
-  string,
-  void
-> = new ActionCreator("focusList", listId => ops => {
-  const state = ops.getState();
-  ops.setState({
-    ...state,
-    navigationState: { ...state.navigationState, listId }
-  });
+export const focusList: Action<string, void> = makeAction(listId => store => {
+  const state = store.getState();
+  store.dispatch(
+    setState({
+      ...state,
+      navigationState: { ...state.navigationState, listId }
+    })
+  );
 });
 
-export const addNewListAndFocus: ActionCreator<
+export const addNewListAndFocus: Action<
   void,
   void
-> = new ActionCreator("addNewListAndFocus", () => ops => {
+> = makeAction(() => store => {
   const newList = {
     todos: {}
   };
-  const listId = ops.dispatch(addList(newList));
-  ops.dispatch(focusList(listId));
+  const listId = store.dispatch(addList(newList));
+  store.dispatch(focusList(listId));
 });
 
 const getNextId = (listId, lists: { [string]: List }): void | string => {
@@ -58,19 +56,21 @@ const getNextId = (listId, lists: { [string]: List }): void | string => {
   return lastId;
 };
 
-export const deleteListAndFocusToNextList: ActionCreator<
+export const deleteListAndFocusToNextList: Action<
   string,
   void
-> = new ActionCreator("deleteListAndFocusToNextList", listId => ops => {
-  const state = ops.getState();
+> = makeAction(listId => store => {
+  const state = store.getState();
   const newLists = { ...state.lists };
   delete newLists[listId];
   const nextId = getNextId(listId, state.lists);
-  ops.setState({
-    lists: newLists,
-    navigationState: {
-      ...state.navigationState,
-      listId: nextId
-    }
-  });
+  store.dispatch(
+    setState({
+      lists: newLists,
+      navigationState: {
+        ...state.navigationState,
+        listId: nextId
+      }
+    })
+  );
 });

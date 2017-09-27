@@ -2,7 +2,7 @@
 import pushid from "pushid";
 
 import type { List } from "@src/types";
-import { ActionCreator } from "@src/store";
+import { type Action, makeAction, modifyState } from "@src/store";
 import type { AppState } from "@src/state/app";
 
 const modifyCurrentList = (fn: List => List) => (state: AppState): AppState => {
@@ -58,23 +58,19 @@ const _setTodoContent = (todoId: string, content: string) => (
   };
 };
 
-export const addTodo: ActionCreator<
-  void,
-  void
-> = new ActionCreator("addTodo", () => ops => {
-  ops.modifyState(modifyCurrentList(_addTodo()));
+export const addTodo: Action<void, void> = makeAction(() => store => {
+  store.dispatch(modifyState(modifyCurrentList(_addTodo())));
 });
 
-export const deleteTodo: ActionCreator<
-  string,
-  void
-> = new ActionCreator("deleteTodo", todoId => ops => {
-  ops.modifyState(modifyCurrentList(_deleteTodo(todoId)));
+export const deleteTodo: Action<string, void> = makeAction(todoId => store => {
+  store.dispatch(modifyState(modifyCurrentList(_deleteTodo(todoId))));
 });
 
-export const setTodoContent: ActionCreator<
+export const setTodoContent: Action<
   { todoId: string, content: string },
   void
-> = new ActionCreator("setTodoContent", ({ todoId, content }) => ops => {
-  ops.modifyState(modifyCurrentList(_setTodoContent(todoId, content)));
+> = makeAction(({ todoId, content }) => store => {
+  store.dispatch(
+    modifyState(modifyCurrentList(_setTodoContent(todoId, content)))
+  );
 });

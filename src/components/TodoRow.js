@@ -9,7 +9,7 @@ const Delete = styled.div`
   &::before {
     content: "X";
     margin-right: 5px;
-    opacity: .5;
+    opacity: 0.5;
   }
 `;
 
@@ -42,11 +42,7 @@ type Props = {
   onDelete: void => void
 };
 
-export class TodoRow extends React.Component {
-  props: Props;
-  state: {
-    content: string
-  };
+export class TodoRow extends React.Component<Props, { content: string }> {
   constructor(props: Props) {
     super();
     this.state = {

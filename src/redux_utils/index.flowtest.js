@@ -13,43 +13,52 @@ type AppState = {
   counter: number
 };
 
-const initialState = {
+const initialAppState = {
   counter: 1
 };
 
-class ActionCreator<A, B> extends ReduxUtils.ActionCreator<AppState, A, B> {}
+type Action<A, B> = ReduxUtils.Action<AppState, A, B>;
+
+function makeAction<A, B>(action: Action<A, B>): Action<A, B> {
+  return ReduxUtils.makeAction(action);
+}
+
+const reducer = (state: AppState, action: any): AppState => {
+  if (action.type === "setState") {
+    return action.payload;
+  }
+  return state;
+};
+
+function setState(payload: AppState) {
+  return {
+    type: "setState",
+    payload
+  };
+}
 
 /*
     Actions Code
   */
 
-const getNumber: ActionCreator<
-  void,
-  number
-> = new ActionCreator("addTest", num => ops => {
-  const state = ops.getState();
+const getNumber: Action<void, number> = makeAction(num => store => {
+  const state = store.getState();
   return state.counter;
 });
 
-const add1: ActionCreator<
-  number,
-  void
-> = new ActionCreator("addTest", num => ops => {
-  const state = ops.getState();
-  ops.setState({ ...state, counter: state.counter + num });
+const add1: Action<number, void> = makeAction(num => store => {
+  const state = store.getState();
+  store.dispatch(setState({ ...state, counter: state.counter + num }));
 });
 
-const add2: ActionCreator<
-  number,
-  void
-> = new ActionCreator("addTest", num => ops => {
-  const state = ops.getState();
+const add2: Action<number, void> = makeAction(num => store => {
+  const state = store.getState();
   // $FlowFixMe
   state.as(); // error: `as` doesn't exist
   // $FlowFixMe
-  ops.asdf(); // error: `asdf` is not a valid op
+  store.asdf(); // error: `asdf` is not a valid op
   // $FlowFixMe
-  ops.setState(); // error: invalid State
+  store.setState(); // error: invalid State
   // $FlowFixMe
   num.asdf(); // error: invalid access of input type
   // $FlowFixMe
@@ -61,8 +70,9 @@ const add2: ActionCreator<
 */
 
 const store = createStore(
-  ReduxUtils.makeReducer(initialState),
-  applyMiddleware(ReduxUtils.hijackDispatch)
+  reducer,
+  initialAppState,
+  applyMiddleware(ReduxUtils.safeThunk)
 );
 
 /*
@@ -73,8 +83,7 @@ type Props = {
   foo: number
 };
 
-class MyComponent extends React.Component {
-  props: ReduxUtils.WithDispatch<Props>;
+class MyComponent extends React.Component<ReduxUtils.WithDispatch<Props>> {
   render() {
     (this.props.foo: number);
     this.props.dispatch(add1(999)); // ok

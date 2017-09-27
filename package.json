@@ -6,7 +6,6 @@
   "author": "Sean Lee <freshdried@gmail.com>",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "callable-class": "^2.0.0",
     "pushid": "^1.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

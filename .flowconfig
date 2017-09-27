@@ -1,5 +1,5 @@
 [ignore]
-.*/node_modules/styled-components/.*
+.*/node_modules/styled-components/src/.*
 
 [include]
 
@@ -9,4 +9,3 @@
 module.name_mapper='^@src\/\(.*\)$' -> '<PROJECT_ROOT>/src/\1'
 
 [version]
-0.48.0

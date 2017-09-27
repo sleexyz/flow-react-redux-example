@@ -2,19 +2,19 @@
 import { applyMiddleware, createStore } from "redux";
 import { createLogger } from "redux-logger";
 import * as ReduxUtils from "@src/redux_utils";
-import * as App from "@src/state/app";
-import * as StorageService from "@src/services/storage_service";
+import * as Types from "@src/types";
+import * as Storage from "@src/storage";
 
 export type WithDispatch<A: {}> = ReduxUtils.WithDispatch<A>;
 
 // We re-export an application-specific ActionCreator class
-export type Action<A, B> = ReduxUtils.Action<App.AppState, A, B>;
+export type Action<A, B> = ReduxUtils.Action<Types.AppState, A, B>;
 
 export function makeAction<A, B>(action: Action<A, B>): Action<A, B> {
   return ReduxUtils.makeAction(action);
 }
 
-const reducer = (state: App.AppState, action: *): App.AppState => {
+const reducer = (state: Types.AppState, action: *): Types.AppState => {
   if (action.type === "setState") {
     return action.payload;
   }
@@ -24,14 +24,14 @@ const reducer = (state: App.AppState, action: *): App.AppState => {
   return state;
 };
 
-export function setState(payload: App.AppState) {
+export function setState(payload: Types.AppState) {
   return {
     type: "setState",
     payload
   };
 }
 
-export function modifyState(payload: App.AppState => App.AppState) {
+export function modifyState(payload: Types.AppState => Types.AppState) {
   return {
     type: "modifyState",
     payload
@@ -39,8 +39,7 @@ export function modifyState(payload: App.AppState => App.AppState) {
 }
 
 export const makeStore = () => {
-  const initialState =
-    StorageService.loadFromLocalStorage() || App.defaultState;
+  const initialState = Storage.loadFromLocalStorage() || Types.defaultAppState;
   return createStore(reducer, initialState, enhancer);
 };
 
@@ -49,7 +48,7 @@ const saveToLocalStorageMiddleware = (() => {
   return store => next => action => {
     const nextState = store.getState();
     if (_state !== nextState) {
-      StorageService.saveToLocalStorage(nextState);
+      Storage.saveToLocalStorage(nextState);
       _state = nextState;
     }
     return next(action);

@@ -34,7 +34,29 @@ export const addNewListAndFocus: Action<
   store.dispatch(focusList(listId));
 });
 
-const getNextId = (listId, lists: { [string]: List }): void | string => {
+export const deleteListAndFocusToNextList: Action<
+  string,
+  void
+> = makeAction(listId => store => {
+  const state = store.getState();
+  const newLists = { ...state.lists };
+  delete newLists[listId];
+  const nextId = _determineNextListId(listId, state.lists);
+  store.dispatch(
+    setState({
+      lists: newLists,
+      navigationState: {
+        ...state.navigationState,
+        listId: nextId
+      }
+    })
+  );
+});
+
+function _determineNextListId(
+  listId,
+  lists: { [string]: List }
+): void | string {
   if (!(listId in lists)) {
     return;
   }
@@ -54,23 +76,4 @@ const getNextId = (listId, lists: { [string]: List }): void | string => {
     }
   }
   return lastId;
-};
-
-export const deleteListAndFocusToNextList: Action<
-  string,
-  void
-> = makeAction(listId => store => {
-  const state = store.getState();
-  const newLists = { ...state.lists };
-  delete newLists[listId];
-  const nextId = getNextId(listId, state.lists);
-  store.dispatch(
-    setState({
-      lists: newLists,
-      navigationState: {
-        ...state.navigationState,
-        listId: nextId
-      }
-    })
-  );
-});
+}

@@ -42,7 +42,10 @@ type Props = {
   onDelete: void => void
 };
 
-export class TodoRow extends React.Component<Props, { content: string }> {
+export default class TodoRow extends React.Component<
+  Props,
+  { content: string }
+> {
   constructor(props: Props) {
     super();
     this.state = {

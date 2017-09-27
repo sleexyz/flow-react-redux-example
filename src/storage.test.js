@@ -1,30 +1,32 @@
 // @flow
-import * as StorageService from "./storage_service";
+import * as Storage from "./storage";
 
-describe("storageService", () => {
+// TODO: refactor tests
+
+describe("Storage", () => {
   describe("loadFromLocalStorage", () => {
-    it("works", () => {
+    it("can retrieve stored data", () => {
       const mockData = { foo: "hello" };
-      global.localStorage = {
+      window.localStorage = {
         getItem: jest.fn(() => JSON.stringify(mockData))
       };
-      const result = StorageService.loadFromLocalStorage();
-      expect(global.localStorage.getItem).toHaveBeenCalledWith("App");
+      const result = Storage.loadFromLocalStorage();
+      expect(window.localStorage.getItem).toHaveBeenCalledWith("App");
       expect(result).toEqual(mockData);
     });
   });
 
   describe("saveToLocalStorage", () => {
-    it("works", () => {
+    it("can store data and retrieve it", () => {
       let result;
-      global.localStorage = {
+      window.localStorage = {
         setItem: jest.fn((key, value) => {
           result = value;
         })
       };
       const mockData = { foo: "hello" };
-      StorageService.saveToLocalStorage((mockData: any));
-      expect(global.localStorage.setItem).toHaveBeenCalledWith(
+      Storage.saveToLocalStorage((mockData: any));
+      expect(window.localStorage.setItem).toHaveBeenCalledWith(
         "App",
         JSON.stringify(mockData)
       );

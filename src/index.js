@@ -3,7 +3,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 
-import { App } from "@src/components/App";
+import App from "@src/App";
 import { makeStore } from "@src/store";
 
 const globalStore = makeStore();

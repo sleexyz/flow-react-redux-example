@@ -11,10 +11,10 @@ export type List = {|
 |};
 
 export type AppState = {|
-  lists: {
+  +lists: {
     +[listId: string]: List
   },
-  navigationState: {|
+  +navigationState: {|
     +listId: void | string
   |}
 |};

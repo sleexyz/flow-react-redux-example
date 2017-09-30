@@ -3,22 +3,22 @@ import React from "react";
 import styled from "styled-components";
 import { css } from "styled-components";
 import { connect } from "react-redux";
-import { Card, colors } from "@src/styles";
+import { Card, Colors } from "@src/styles";
 import type { WithDispatch } from "@src/store";
 import * as Types from "@src/types";
-import * as AppActions from "./actions";
-import * as CurrentListActions from "./current_list_actions";
+import * as Actions from "./actions";
+import * as CurrentList from "./current_list";
 import TabContent from "./TabContent";
 
 type Props = {
-  lists: { [string]: Types.List },
+  lists: { +[string]: Types.List },
   currentList: ?Types.List,
   currentListId: ?string
 };
 
 const mapStateToProps = (state: Types.AppState): Props => ({
   lists: state.lists,
-  currentList: CurrentListActions._selectCurrentList(state),
+  currentList: CurrentList.selectCurrentList(state),
   currentListId: state.navigationState.listId
 });
 
@@ -30,13 +30,13 @@ class App extends React.Component<WithDispatch<Props>> {
           <ListTab
             key={listId}
             isActive={listId === this.props.currentListId}
-            onClick={() => this.props.dispatch(AppActions.focusList(listId))}
+            onClick={() => this.props.dispatch(Actions.focusList(listId))}
           >
             {listId}
           </ListTab>
         ))}
         <NewTab
-          onClick={() => this.props.dispatch(AppActions.addNewListAndFocus())}
+          onClick={() => this.props.dispatch(Actions.addNewListAndFocus())}
         />
       </TabBar>
     );
@@ -50,7 +50,7 @@ class App extends React.Component<WithDispatch<Props>> {
       return (
         <ContentDiv>
           <AddNewMessage
-            onClick={() => this.props.dispatch(AppActions.addNewListAndFocus())}
+            onClick={() => this.props.dispatch(Actions.addNewListAndFocus())}
           />
         </ContentDiv>
       );
@@ -136,16 +136,16 @@ const Tab = css`
 `;
 
 const ListTab = styled.div`
-  background: ${props => (props.isActive ? colors.white : colors.grey)};
-  color: ${props => (props.isActive ? colors.black : colors.white)};
+  background: ${props => (props.isActive ? Colors.white : Colors.grey)};
+  color: ${props => (props.isActive ? Colors.black : Colors.white)};
   ${Tab};
   box-shadow: ${props =>
-    props.isActive ? `0 1px 0 0 ${colors.white}` : "none"};
+    props.isActive ? `0 1px 0 0 ${Colors.white}` : "none"};
 `;
 
 const NewTab = styled.div`
-  background: ${colors.blue};
-  color: ${colors.white};
+  background: ${Colors.blue};
+  color: ${Colors.white};
   width: 20px;
   height: auto;
   text-align: center;

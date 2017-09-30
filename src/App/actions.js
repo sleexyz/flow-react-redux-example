@@ -1,8 +1,8 @@
 // @flow
 import pushid from "pushid";
-
 import type { List } from "@src/types";
-import { makeAction, type Action, setState } from "@src/store";
+import { makeAction, type Action, setState, modifyState } from "@src/store";
+import * as CurrentList from "./current_list";
 
 export const addList: Action<List, string> = makeAction(newList => store => {
   const state = store.getState();
@@ -53,9 +53,32 @@ export const deleteListAndFocusToNextList: Action<
   );
 });
 
+export const addTodo: Action<void, void> = makeAction(() => store => {
+  store.dispatch(
+    modifyState(CurrentList.modifyCurrentList(CurrentList.addNewTodo()))
+  );
+});
+
+export const deleteTodo: Action<string, void> = makeAction(todoId => store => {
+  store.dispatch(
+    modifyState(CurrentList.modifyCurrentList(CurrentList.deleteTodo(todoId)))
+  );
+});
+
+export const setTodoContent: Action<
+  { todoId: string, content: string },
+  void
+> = makeAction(({ todoId, content }) => store => {
+  store.dispatch(
+    modifyState(
+      CurrentList.modifyCurrentList(CurrentList.setTodoContent(todoId, content))
+    )
+  );
+});
+
 function _determineNextListId(
   listId,
-  lists: { [string]: List }
+  lists: { +[string]: List }
 ): void | string {
   if (!(listId in lists)) {
     return;

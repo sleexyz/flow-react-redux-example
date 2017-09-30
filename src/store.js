@@ -7,14 +7,13 @@ import * as Storage from "@src/storage";
 
 export type WithDispatch<A: {}> = ReduxUtils.WithDispatch<A>;
 
-// We re-export an application-specific ActionCreator class
 export type Action<A, B> = ReduxUtils.Action<Types.AppState, A, B>;
 
 export function makeAction<A, B>(action: Action<A, B>): Action<A, B> {
   return ReduxUtils.makeAction(action);
 }
 
-const reducer = (state: Types.AppState, action: *): Types.AppState => {
+const reducer = (state: Types.AppState, action: any): Types.AppState => {
   if (action.type === "setState") {
     return action.payload;
   }

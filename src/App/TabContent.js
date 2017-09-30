@@ -5,13 +5,7 @@ import styled from "styled-components";
 
 import type { WithDispatch } from "@src/store";
 import type { List } from "@src/types";
-// TODO: qualify imports
-import {
-  deleteTodo,
-  setTodoContent,
-  addTodo
-} from "@src/App/current_list_actions";
-import { deleteListAndFocusToNextList } from "@src/App/actions";
+import * as Actions from "@src/App/actions";
 import TodoRow from "@src/App/TodoRow";
 
 class TabContent extends React.Component<
@@ -27,8 +21,8 @@ class TabContent extends React.Component<
         <TodoRow
           key={todoId}
           onChange={(content: string) =>
-            this.props.dispatch(setTodoContent({ todoId, content }))}
-          onDelete={() => void this.props.dispatch(deleteTodo(todoId))}
+            this.props.dispatch(Actions.setTodoContent({ todoId, content }))}
+          onDelete={() => void this.props.dispatch(Actions.deleteTodo(todoId))}
           content={todo.content}
         />
       );
@@ -38,14 +32,14 @@ class TabContent extends React.Component<
         <Body>
           <Content>
             {todos}
-            <AddTodo onClick={() => this.props.dispatch(addTodo())} />
+            <AddTodo onClick={() => this.props.dispatch(Actions.addTodo())} />
           </Content>
         </Body>
         <Footer>
           <DeleteList
             onClick={() =>
               this.props.dispatch(
-                deleteListAndFocusToNextList(this.props.listId)
+                Actions.deleteListAndFocusToNextList(this.props.listId)
               )}
           />
         </Footer>

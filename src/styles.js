@@ -9,7 +9,7 @@ export const Card = (h: number = 1) => {
   `;
 };
 
-export const colors = {
+export const Colors = {
   lightGrey: "#f5f6f7",
   grey: "#aaaaaa",
   blue: "#0288d1",

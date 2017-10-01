@@ -1,19 +1,28 @@
 {
   "env": {
     "browser": true,
-    "jest": true,
-    "node": true
+    "jest/globals": true,
+    "node": true,
+    "es6": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:jest/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:react/recommended"
   ],
   "parser": "babel-eslint",
-  "plugins": [
-    "flowtype",
-    "react"
-  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": ["flowtype", "import", "jest", "jsx-a11y", "react"],
   "rules": {
     "flowtype/generic-spacing": 0,
     "flowtype/space-after-type-colon": 0,
@@ -54,8 +63,9 @@
   },
   "settings": {
     "import/resolver": {
+      "babel-module": {},
       "webpack": {
-        "config": "./webpack.config.dev.js"
+        "config": "./webpack.config-dev.js"
       }
     }
   }

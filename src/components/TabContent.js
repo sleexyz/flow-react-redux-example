@@ -26,7 +26,7 @@ const DeleteList = styled.div`
   cursor: pointer;
   text-align: right;
   &::before {
-    opacity: .5;
+    opacity: 0.5;
     content: "X - Delete List";
   }
 `;
@@ -53,11 +53,12 @@ const AddTodo = styled.div`
   }
 `;
 
-class TabContentInner extends React.Component {
-  props: WithDispatch<{
-    list: List,
-    listId: string
-  }>;
+type Props = {|
+  list: List,
+  listId: string
+|};
+
+class TabContentInner extends React.Component<WithDispatch<Props>> {
   render() {
     const todos = Object.keys(this.props.list.todos).map(todoId => {
       const todo = this.props.list.todos[todoId];

@@ -1,7 +1,6 @@
 // @flow
 import React from "react";
-import styled from "styled-components";
-import { css } from "styled-components";
+import styled, { css } from "styled-components";
 import { connect } from "react-redux";
 
 import { Card, colors } from "@src/styles";
@@ -46,7 +45,7 @@ const AddNewMessage = styled.div`
   &::before {
     font-size: 2em;
     content: "Add a new List!";
-    opacity: .5;
+    opacity: 0.5;
   }
 `;
 
@@ -96,9 +95,7 @@ const mapStateToProps = (state: Types.State): Props => ({
   currentListId: state.navigationState.listId
 });
 
-class AppInner extends React.Component {
-  props: WithDispatch<Props>;
-
+class AppInner extends React.Component<WithDispatch<Props>> {
   render() {
     let inner;
     if (Object.keys(this.props.lists).length > 0) {
@@ -119,9 +116,7 @@ class AppInner extends React.Component {
           </a>
         </Header>
         {this.renderTabBar()}
-        <ContentDiv>
-          {inner}
-        </ContentDiv>
+        <ContentDiv>{inner}</ContentDiv>
       </Body>
     );
   }

@@ -10,7 +10,7 @@ import { TabContent } from "@src/components/TabContent";
 import * as AppState from "@src/state/app";
 import * as Types from "@src/types";
 
-const Body = styled.div`
+export const Body = styled.div`
   margin: 60px 20vw;
   height: calc(60vh - 100px);
   width: 60vw;
@@ -35,7 +35,7 @@ const ContentDiv = styled.div`
   height: calc(100% - ${tabBarHeight});
   overflow-y: auto;
   ${Card()};
-  border-top: 0.5px solid #aaaaaa;
+  border-top: 0.5px solid #aaa;
 `;
 
 const AddNewMessage = styled.div`
@@ -51,7 +51,7 @@ const AddNewMessage = styled.div`
 
 const Tab = css`
   padding: 5px;
-  border: 0.5px solid #aaaaaa;
+  border: 0.5px solid #aaa;
   border-bottom: none;
   border-radius: 2px 2px 0 0;
   margin-right: 1px;
@@ -80,6 +80,7 @@ const NewTab = styled.div`
     font-weight: bold;
     content: "+";
   }
+
   ${Tab};
 `;
 

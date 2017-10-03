@@ -31,15 +31,12 @@
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-react-jsx": "^6.24.1",
-    "babel-plugin-transform-regenerator": "^6.26.0",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-es2015": "^6.24.1",
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "enzyme-to-json": "^3.0.1",
     "eslint": "^4.8.0",
     "eslint-import-resolver-babel-module": "^3.0.0",
-    "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-flowtype": "^2.37.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jest": "^21.2.0",
@@ -84,6 +81,9 @@
     "stylelint": "stylelint src/**/*.js"
   },
   "jest": {
-    "setupFiles": ["./src/shim.js", "./src/setup_tests.js"]
+    "setupFiles": [
+      "./src/shim.js",
+      "./src/setup_tests.js"
+    ]
   }
 }

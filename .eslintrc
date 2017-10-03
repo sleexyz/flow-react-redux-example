@@ -26,25 +26,10 @@
   "rules": {
     "flowtype/generic-spacing": 0,
     "flowtype/space-after-type-colon": 0,
-    "no-console": 1,
     "no-multiple-empty-lines": [
       2,
       {
         "max": 1
-      }
-    ],
-    "no-shadow": [
-      "error",
-      {
-        "allow": [
-          "t"
-        ]
-      }
-    ],
-    "no-unused-vars": [
-      "error",
-      {
-        "args": "none"
       }
     ],
     "sort-imports": [
@@ -63,10 +48,7 @@
   },
   "settings": {
     "import/resolver": {
-      "babel-module": {},
-      "webpack": {
-        "config": "./webpack.config-dev.js"
-      }
+      "babel-module": {}
     }
   }
 }

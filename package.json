@@ -84,6 +84,6 @@
     "stylelint": "stylelint src/**/*.js"
   },
   "jest": {
-    "setupTestFrameworkScriptFile": "./src/setup_tests.js"
+    "setupFiles": ["./src/shim.js", "./src/setup_tests.js"]
   }
 }

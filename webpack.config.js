@@ -11,6 +11,11 @@ module.exports = {
     './src/index.js',
   ],
   devtool: 'cheap-module-source-map',
+  devServer: {
+    port: 8081,
+    contentBase: "./dist"
+  },
+
   module: {
     rules: [
       {

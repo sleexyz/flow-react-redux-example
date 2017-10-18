@@ -50,7 +50,7 @@ export const modifyState = (f: Types.State => Types.State) => ({
   payload: f
 });
 
-const reducer = (state, action) => {
+export const reducer = (state, action) => {
   if (action.type === "setState") {
     return action.payload;
   } else if (action.type === "modifyState") {

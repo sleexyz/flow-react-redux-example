@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
 
 import { App } from "@src/components/App";
-import { makeStore } from "@src/store";
+import { makeStore, reducer } from "@src/store";
 
 const globalStore = makeStore();
 
@@ -22,5 +22,9 @@ const renderApp = () => {
 renderApp();
 
 if (module.hot) {
-  (module.hot: any).accept(undefined, renderApp);
+  const mhr = (module.hot: any);
+  mhr.accept(undefined, renderApp);
+  mhr.accept("./store", () => {
+    globalStore.replaceReducer(reducer);
+  });
 }
